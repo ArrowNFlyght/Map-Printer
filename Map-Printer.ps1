@@ -3,9 +3,6 @@
 .SYNOPSIS
 This script consolidates several printer related cmdlets to add a printer to a users computer. These include Add-PrinterDriver, Add-PrinterPort, and Add-Printer.
 
-.DESCRIPTION
-
-
 .PARAMETER ip
 Takes the IP Address of the printer on the network to add.
 
@@ -19,6 +16,7 @@ The driver that will be added to the printer port. Will accept HP, Lanier, or RI
 The computer name that the printer will be added to. If blank, will default to host computer.
 
 .EXAMPLE
+Map-Printer -ip 10.100.10.25 -computer BOBS-PC -driver "HP Universal Printing PCL 6" -printer BOBS-PRINTER
 #>
 
 Param(
@@ -27,13 +25,6 @@ Param(
     $driver, #brand of driver
     $computer #name of computer
 )
-
-
-#Uncomment to create an executable file
-# $ip = Read-Host -Prompt "Enter the IP Address"
-# $name = Read-Host -Prompt "Enter the name of printer"
-# $computer = Read-Host -Prompt "Enter the name of the computer"
-# $driver = Read-Host -Prompt "Enter the name of the driver"
 
 #check for driver shortcut and add driver
 if($driver -eq "HP"){
@@ -71,14 +62,3 @@ if(!$portCheck){
 }
 
 Add-Printer -ComputerName $computer -Name $printer -DriverName $driver -PortName $ip 
-
-#Uncomment for executable
-# $checkPrinter = Get-Printer -Name $printer -ComputerName $computer
-# if($checkPrinter){
-#     "The computer added successfully!"
-#     Read-Host "Press any key to end"
-# }
-# else{
-#     "The printer was not added. Check inputs and try again."
-#     Read-Host "Press any key to end"
-# }
